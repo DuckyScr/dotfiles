@@ -1,0 +1,99 @@
+{
+    "layer": "top",
+    "position": "top",
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-top": 4,
+    "height": 28,
+    "modules-left": ["custom/arch", "hyprland/workspaces"],
+    "modules-center": [],
+    "modules-right": ["cpu", "memory", "disk", "bluetooth", "network", "pulseaudio", "battery", "clock"],
+
+    "custom/arch": {
+        "format": "󰣇",
+        "on-click": "bash -c 'choice=$(echo -e \"Restart\\nShutdown\" | rofi -dmenu -p \"Power Menu\"); if [ \"$choice\" = \"Restart\" ]; then systemctl reboot; elif [ \"$choice\" = \"Shutdown\" ]; then systemctl poweroff; fi'"
+    },
+
+    "hyprland/workspaces": {
+      "persistent-workspaces": {
+        "*" : 10,
+      }
+    },
+
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤮",
+        "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "Disconnected",
+        "interval": 10,
+        "on-click": "kitty --class floating --override initial_window_width=640 --override initial_window_height=480 impala"
+    },
+
+    "cpu": {
+        "format": "󰍛 {usage}%",
+        "interval": 1
+    },
+
+    "memory": {
+        "format": "󰘚 {used:0.1f}G/{total:0.1f}G",
+        "interval": 1
+    },
+
+    "disk": {
+        "format": "󰋊 {used}/{total}",
+        "path": "/",
+        "interval": 30
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-connected": "󰂱",
+        "format-disabled": "󰂲",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "kitty --class floating --override initial_window_width=640 --override initial_window_height=480 bluetui"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}",
+        "format-muted": "󰝟 {volume}",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕿", "󰖀", "󰕾"],
+
+        },
+        "on-click": "pavucontrol",
+        "tooltip-format": "{desc} - {volume}",
+        "sink": "@DEFAULT_SINK@",
+        "ignored-sinks": [],
+        "interval": 1
+    },
+
+    "clock": {
+        "format": "{:%H:%M:%S}",
+        "tooltip-format": "{:%A, %B %d, %Y}",
+        "color": "#ffffff",
+        "interval": 1
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "format-charging": "󰂄 {capacity}",
+        "format-plugged": "󰂄 {capacity}",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        }
+    }
+}
